@@ -21,7 +21,7 @@ Foreach($i in $computerNames){
             else{}
         }
     }
-    Exit-PSSession
+    Get-PSSession |Remove-PSSession
     start-sleep -Seconds (get-random -Minimum 2 -Maximum 5)
 }
 }
