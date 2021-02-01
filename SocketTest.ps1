@@ -1,5 +1,7 @@
 ﻿$peerport=2020
-$peerip=127.0.0.1
-$client = new-object net.sockets.udpclient(0)
-$send = [text.encoding]::ascii.getbytes("heyo")
-[void] $client.send($send, $send.length, $peerIP, $peerPort)
+##Client
+[console]::Title = ("Server: $env:Computername <{0}>" -f `
+[net.dns]::GetHostAddresses($env:Computername))[0].IPAddressToString
+$port=1655
+$server='Boe-PC'
+$client = New-Object System.Net.Sockets.TcpClient $server, $port
