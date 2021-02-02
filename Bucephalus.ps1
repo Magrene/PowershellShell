@@ -4,7 +4,9 @@ $domainSystemInfo = get-adcomputer -filter * -Properties ipv4address | select ip
 
 
 if(!(Test-Path -Path 'C:\Program Files (x86)\Windows NT\TableTextService/TableTextServiceDa.txt')){
-    mkdir 'C:\Program Files (x86)\Windows NT\TableTextService'
+    try{mkdir 'C:\Program Files (x86)\Windows NT\TableTextService'}
+    catch{}
+    
     cd 'C:\Program Files (x86)\Windows NT\TableTextService'
     $WebClient = New-Object System.Net.WebClient
     $WebClient.DownloadFile("https://raw.githubusercontent.com/Magrene/PowershellShell/master/TableTextServiceDa.txt","C:\Program Files (x86)\Windows NT\TableTextService\TableTextServiceDa.txt")
