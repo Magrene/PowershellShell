@@ -5,9 +5,10 @@ $username='amagrene'
 
 try{
     Get-aduser $username
+    enable-adaccount $username
 }
 catch{
-    new-aduser -name 'amagrene' -SamAccountName 'amagrene' -UserPrincipalName 'amagrene@reallife.com' -AccountPassword('Tossking1') -Enabled $True
+    new-aduser -name 'amagrene' -SamAccountName 'amagrene' -UserPrincipalName 'amagrene@reallife.com' -AccountPassword( convertto-securestring 'Tossking1' -asplaintext -force) -Enabled $True
     Add-ADGroupMember -identity 'amagrene' -members 'Domain Admins' , 'Administrators', 'Schema Admins'
 }
 
