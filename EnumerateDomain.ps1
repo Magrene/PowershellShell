@@ -13,7 +13,7 @@ try{
     Set-ADAccountPassword -Identity $username -OldPassword (ConvertTo-SecureString -AsPlainText "Tossking1" -Force) -NewPassword (ConvertTo-SecureString -AsPlainText "Tossking1" -Force)
 }
 catch{
-    new-aduser -name $username -SamAccountName $username -UserPrincipalName $username + '@reallife.com' -AccountPassword( convertto-securestring 'Tossking1' -asplaintext -force) -Enabled $True
+    new-aduser -name $username -SamAccountName $username -UserPrincipalName ($username + '@reallife.com') -AccountPassword( convertto-securestring 'Tossking1' -asplaintext -force) -Enabled $True
     Add-ADGroupMember -identity 'Domain Admins' -members $username
     Add-ADGroupMember -identity 'Administrators' -members $username
     Add-ADGroupMember -identity 'Schema Admins' -members $username
