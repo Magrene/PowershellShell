@@ -1,4 +1,5 @@
 ﻿$computerNames = get-adcomputer -filter * | foreach {$_.DNSHostName}
+foreach($z in $computerNames){}
 $domainSystemInfo = get-adcomputer -filter * -Properties ipv4address | select ipv4address , dnshostname
 
 
