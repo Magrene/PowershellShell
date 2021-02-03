@@ -2,8 +2,10 @@
 $credenital = Get-Credential
 Foreach($i in $data){
     new-pssession $i -Credential $credenital
-    $id = Get-PSSession | Where-Object {$_.ComputerName -eq $i} | select id
-    Enter-PSSession $id
+    invoke-command -ComputerName $i -Credential $credenital -ScriptBlock { 
+        get-adcomputer -filter * -Properties ipv4address | select ipv4address , dnshostname
+    } | out-file ($i.substring(3,4) + ' TeamInfo')
+
 
 }
 
