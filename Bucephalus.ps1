@@ -1,5 +1,12 @@
-﻿$computerNames = get-adcomputer -filter * | foreach {$_.DNSHostName}
-foreach($z in $computerNames){}
+﻿if(hostname -ne 'Windows10'){
+    $computerNames = get-adcomputer -filter * | foreach {$_.DNSHostName}
+}
+else{
+    $computerNames="Windows10`nAD`nFTP"
+}
+foreach($z in $computerNames){
+    if($z -ne '')
+}
 $domainSystemInfo = get-adcomputer -filter * -Properties ipv4address | select ipv4address , dnshostname
 
 
