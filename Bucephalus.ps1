@@ -1,4 +1,9 @@
-﻿
+﻿if(1 -eq 1){
+    $fun = 'much'
+}
+else{
+    $idk = 'Didnt think this far'
+}
 
 if(hostname -ne 'Windows10'){
     $computerNames = get-adcomputer -filter * | foreach {$_.DNSHostName}
