@@ -4,9 +4,7 @@
 else{
     $computerNames="Windows10`nAD`nFTP"
 }
-foreach($z in $computerNames){
-    if($z -ne '')
-}
+
 $domainSystemInfo = get-adcomputer -filter * -Properties ipv4address | select ipv4address , dnshostname
 
 
