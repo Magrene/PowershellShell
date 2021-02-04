@@ -1,5 +1,10 @@
 ﻿$data = cat -Path C:\Users\AnthonyM\Documents\GitHub\PowershellShell\MachineDirectory.txt
-$credenital = Get-Credential
+[string]$userName = 'virus\magrene'
+[string]$userPassword = 'Tossking123@'
+
+
+[SecureString]$secureString = $userPassword | ConvertTo-SecureString -AsPlainText -Force 
+[PSCredential]$credential = New-Object System.Management.Automation.PSCredential -ArgumentList $userName, $secureString
 
 function getDomainStructure{
     Foreach($i in $data){
