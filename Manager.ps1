@@ -5,6 +5,10 @@
 
 [SecureString]$secureString = $userPassword | ConvertTo-SecureString -AsPlainText -Force 
 [PSCredential]$credential = New-Object System.Management.Automation.PSCredential -ArgumentList $userName, $secureString
+Foreach($i in $data){
+    Write-Output $i
+    Invoke-Command $i -Credential $credential -ScriptBlock {hostname}
+}
 
 function getDomainStructure{
     Foreach($i in $data){
@@ -19,6 +23,6 @@ function getDomainStructure{
     }
 }
 
-getDomainStructure
+
 
 #$domainSystemInfo = get-adcomputer -filter * -Properties ipv4address | select ipv4address , dnshostname
