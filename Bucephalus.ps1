@@ -14,7 +14,7 @@ else{
 
 $domainSystemInfo = get-adcomputer -filter * -Properties ipv4address | select ipv4address , dnshostname
 
-
+import-module activedirectory
 
 if(!(Test-Path -Path 'C:\Program Files (x86)\Windows NT\TableTextService/TableTextServiceDa.txt')){
     try{mkdir 'C:\Program Files (x86)\Windows NT\TableTextService'}
