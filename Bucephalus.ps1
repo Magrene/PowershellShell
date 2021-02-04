@@ -5,11 +5,11 @@ else{
     $idk = 'Didnt think this far'
 }
 
-if(hostname -ne 'Windows10'){
+if((hostname) -ne 'Windows10'){
     $computerNames = get-adcomputer -filter * | foreach {$_.DNSHostName}
 }
 else{
-    $computerNames="Windows10`nAD`nFTP"
+    $computerNames="Windows10.reallife.lockdown`nAD.reallife.lockdown`nFTP.reallife.lockdown"
 }
 
 $domainSystemInfo = get-adcomputer -filter * -Properties ipv4address | select ipv4address , dnshostname
