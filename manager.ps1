@@ -1,14 +1,14 @@
 ﻿$data = cat -Path .\MachineDirectory.txt
 [string]$userName = 'virus\magrene'
 [string]$userPassword = 'Tossking123@'
-
 [SecureString]$secureString = $userPassword | ConvertTo-SecureString -AsPlainText -Force 
 [PSCredential]$credential = New-Object System.Management.Automation.PSCredential -ArgumentList $userName, $secureString
+function callRemote{
 Foreach($i in $data){
     $currentTeam = $i.substring(0,5) 
     Write-Output $i
-       
-        ($er = ($output=Invoke-Command $i -Credential $credential -ScriptBlock {hostname}) 2>&1) | Out-Null
+        $cmd = read-host
+        ($er = ($output=Invoke-Command $i -Credential $credential -ArgumentList $cmd -ScriptBlock {$args[0]}) 2>&1) | Out-Null
         Write-Output $output
         if($er.Exception){
             $targetIP=@()
@@ -31,7 +31,7 @@ Foreach($i in $data){
        
         }
 }
-
+}
 function getDomainStructure{
     Foreach($i in $data){
         new-pssession $i -Credential $credenital
@@ -46,5 +46,22 @@ function getDomainStructure{
 }
 
 
+function psSession{
+    $TargetTeam = read-host 'Target Team'
+    $TargetTeam = ('10.' + $TargetTeam + '.')
+    $TargetHost = read-host 'FTP, ADDS, Windows Client'
+    if($TargetHost -eq 'FTP'){
+        New-PSSession ($TargetTeam + '2.4') -Credential $credential | Enter-PSSession
+        
+    }
+    elseif($TargetHost -eq 'ADDS'){
+        New-PSSession ($TargetTeam + '1.60') -Credential $credential | Enter-PSSession
+    }
+    else{
+        New-PSsession ($TargetTeam + '1.70') -Credential $credential | Enter-PSSession
+    }
+    Get-PSSession | Remove-PSSession
+}
 
+psSession
 #$domainSystemInfo = get-adcomputer -filter * -Properties ipv4address | select ipv4address , dnshostname
