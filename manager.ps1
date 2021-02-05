@@ -1,4 +1,15 @@
-﻿$data = cat -Path .\MachineDirectory.txt
+﻿Write-Output '-=--------------------------------=-'
+Write-Output '-==------------------------------==-'
+Write-Output '-===----------------------------===-'
+Write-Output '-====--------------------------====-'
+Write-Output '-=====------------------------=====-'
+Write-Output '-=====------------------------=====-'
+Write-Output '-=====------------------------=====-'
+Write-Output '-=====------------------------=====-'
+Write-Output '-=====------------------------=====-'
+Write-Output '-=====WIN-RM-C&C--------------=====-'
+Write-Output '-==================================-'
+$data = cat -Path .\MachineDirectory.txt
 [string]$userName = 'virus\magrene'
 [string]$userPassword = 'Tossking123@'
 [SecureString]$secureString = $userPassword | ConvertTo-SecureString -AsPlainText -Force 
@@ -63,5 +74,29 @@ function psSession{
     Get-PSSession | Remove-PSSession
 }
 
-psSession
+function Menus{
+
+    While(1 -eq 1){
+        Write-Output '-==================================-'
+        write-output 'Select an option'
+        write-output '(1) Issue a command to all hosts.'
+        Write-Output '(2) Issue a command to all hosts of a speific team.'
+        Write-Output '(3) Issue a command to all hosts of a type.'
+        Write-Output '(4) Spawn an interactive shell.'
+
+        $input = read-host 
+        if($input -eq 4){
+            psSession
+        
+        }
+
+
+
+        Menus
+    }
+
+}
+
+
+Menus
 #$domainSystemInfo = get-adcomputer -filter * -Properties ipv4address | select ipv4address , dnshostname
