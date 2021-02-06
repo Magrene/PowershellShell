@@ -1,16 +1,19 @@
 ﻿Write-Output '-=--------------------------------=-'
 Write-Output '-==------------------------------==-'
 Write-Output '-===----------------------------===-'
-Write-Output '-====--------------------------====-'
-Write-Output '-=====------------------------=====-'
-Write-Output '-=====------------------------=====-'
-Write-Output '-=====------------------------=====-'
-Write-Output '-=====------------------------=====-'
-Write-Output '-=====------------------------=====-'
-Write-Output '-=====WIN-RM-C&C--------------=====-'
-Write-Output '-==================================-'
+Write-Output '-====------------=-------------====-'
+Write-Output '-=====----------===-----------=====-'
+Write-Output '-=====----------===-----------=====-'
+Write-Output '-=====-====-----===-========--=====-'
+Write-Output '-=====-====-----===-==-==-==--=====-'
+Write-Output '-=====-=---=----===-=--==--=--=====-'
+Write-Output '-=====-=----=---===-=--==--=--=====-'
+$ftp = cat -path .\ftp.txt
+$ADDS = cat -path .\ADDS.txt
+$WIN10 = cat -path .\client.txt
 $targetIP=@()
 $data = cat -Path .\MachineDirectory.txt
+
 [string]$userName = 'virus\magrene'
 [string]$userPassword = 'Tossking123@'
 [SecureString]$secureString = $userPassword | ConvertTo-SecureString -AsPlainText -Force 
@@ -105,7 +108,7 @@ function TargetTeam{
     }    
     foreach($z in $targetIP){
             write-output $z
-            ($er = ($output=(Invoke-Command $z -Credential $credential -ArgumentList $cmd -ScriptBlock {& $args[0]})) 2>&1)
+            ($er = ($output=(Invoke-Command $z -Credential $credential -ArgumentList $cmd -ScriptBlock {invoke-expression $args[0]})) 2>&1)
             if($er.Exception){
                 
                 $targetIPF=@()
@@ -117,7 +120,7 @@ function TargetTeam{
                             foreach($x in $targetIPF){
                             
                                 Write-Output ('Machine at ' + $x + ' executing command on machine ' + $i)
-                                invoke-command $x -Credential $credential -ArgumentList $i , $credential , $cmd -ScriptBlock{invoke-command $args[0] -Credential $args[1] -ArgumentList $args[3] -ScriptBlock{$args[0]}} 
+                                invoke-command $x -Credential $credential -ArgumentList $i , $credential , $cmd -ScriptBlock{invoke-command $args[0] -Credential $args[1] -ArgumentList $args[3] -ScriptBlock{invoke-expression $args[0]}} 
                             }
                         }
 
@@ -146,6 +149,45 @@ function psSession{
     
 }
 
+function TargetHostType{
+    $targetIP=@()
+    $TargetHost = read-host 'Target Host Type: '
+        
+    Write-Output 'Please enter a command to distribute.'
+    $cmd = read-host
+    if($TargetHost -eq "FTP"){$TargetHosts = $FTP}
+    elseif($TargetHost -eq "ADDS"){$TargetHosts = $ADDS}
+    else{$TargetHosts = $WIN10}
+    
+    Write-Output '----Executing----' 
+   
+    foreach($z in $targetHosts){
+            write-output $z
+            ($er = ($output=(Invoke-Command $z -Credential $credential -ArgumentList $cmd -ScriptBlock {invoke-expression $args[0]})) 2>&1)
+            
+            if($er.Exception){
+                
+                $targetIPF=@()
+                Write-Output ('Failed to contact ' + $i)
+                Foreach($z in $data){
+                    if($z.substring(0,5) -eq $i.substring(0,5) -and $i -ne $z) {
+                        if($targetIP -notcontains $z){
+                            $targetIPF += $z          
+                            foreach($x in $targetIPF){
+                            
+                                Write-Output ('Machine at ' + $x + ' executing command on machine ' + $i)
+                                invoke-command $x -Credential $credential -ArgumentList $i , $credential , $cmd -ScriptBlock{invoke-command $args[0] -Credential $args[1] -ArgumentList $args[3] -ScriptBlock{invoke-expression $args[0]}} 
+                            }
+                        }
+
+                    }
+                
+                
+                }
+            
+            }
+    }
+}
 function Menus{
         $control = 1
         $f = 1
@@ -167,7 +209,9 @@ function Menus{
             elseif($input -eq 2){
                 TargetTeam
             }
-            
+            elseif($input -eq 3){
+                TargetHostType
+            }
         
 
         
