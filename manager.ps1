@@ -1,11 +1,12 @@
-﻿Write-Output '-=--------------------------------=-'
-Write-Output '-==------------------------------==-'
-Write-Output '-===----------------------------===-'
-Write-Output '-====------------=-------------====-'
-Write-Output '-=====-=====----===-----------=====-'
-Write-Output '-=====-=   =----===-----------=====-'
+﻿$stopwatch = [system.diagnostics.stopwatch]::StartNew()
+Write-Output '-=--------------------------------=-'
+Write-Output '-==-----------=-----=------------==-'
+Write-Output '-===-----------=-=-=------------===-'
+Write-Output '-====-----------===------------====-'
 Write-Output '-=====-=====----===-========--=====-'
-Write-Output '-=====-=----=---===-==-==-==--=====-'
+Write-Output '-=====-=   =----===-==-==-==--=====-'
+Write-Output '-=====-=====----===-=--==--=--=====-'
+Write-Output '-=====-=----=---===-=--==--=--=====-'
 Write-Output '-=====-=-----=--===-=--==--=--=====-'
 Write-Output '-=====-=------=-===-=--==--=--=====-'
 $ftp = cat -path .\ftp.txt
@@ -67,7 +68,7 @@ function allHost{
     Foreach($i in $data){
         $currentTeam = $i.substring(0,5) 
             Write-Output $i
-            ($er = ($output=(Invoke-Command $i -Credential $credential -ArgumentList $cmd -ScriptBlock {& $args[0]})) 2>&1)
+            ($er = ($output=(Invoke-Command $i -Credential $credential -ArgumentList $cmd -ScriptBlock {invoke-expression $args[0]})) 2>&1)
             
             
             if($er.Exception){
@@ -80,7 +81,7 @@ function allHost{
                             foreach($x in $targetIP){
                             
                                 Write-Output ('Machine at ' + $x + ' executing command on machine ' + $i)
-                                invoke-command $x -Credential $credential -ArgumentList $i , $credential , $cmd -ScriptBlock{invoke-command $args[0] -Credential $args[1] -ArgumentList $args[3] -ScriptBlock{$args[0]}} 
+                                invoke-command $x -Credential $credential -ArgumentList $i , $credential , $cmd -ScriptBlock{invoke-command $args[0] -Credential $args[1] -ArgumentList $args[3] -ScriptBlock{invoke-expression $args[0]}} 
                             }
                         }
 
