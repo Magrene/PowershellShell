@@ -190,16 +190,17 @@ function TargetHostType{
     }
 }
 function Menus{
-        $control = 1
-        $f = 1
+    $control=1
         
+        while(1 -eq  $control){  
             Write-Output '-==================================-'
             write-output 'Select an option'
             write-output '(1) Issue a command to all hosts.'
             Write-Output '(2) Issue a command to all hosts of a speific team.'
             Write-Output '(3) Issue a command to all hosts of a type.'
             Write-Output '(4) Spawn an interactive shell.'
-
+            Write-output '(q) Quit'
+            
             $input = read-host 
             if($input -eq 4){
                 psSession
@@ -213,9 +214,12 @@ function Menus{
             elseif($input -eq 3){
                 TargetHostType
             }
-        
+            elseif($input -eq 'q'){
+                $control=2
+            
+            }
             read-host
-        
+        }
     
 
 }
