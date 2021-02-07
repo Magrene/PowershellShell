@@ -214,7 +214,7 @@ function Menus{
                 TargetHostType
             }
         
-
+            read-host
         
     
 
