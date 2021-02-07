@@ -204,6 +204,7 @@ function Menus{
             $input = read-host 
             if($input -eq 4){
                 psSession
+                $control=2
             }
             elseif($input -eq 1){
                 allHost
