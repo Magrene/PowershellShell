@@ -4,13 +4,14 @@
 else{
     $idk = 'Didnt think this far'
 }
+[net.servicepointmanager]::SecurityProtocol = [net.securityprotocoltype]::Tls12
 import-module activedirectory
 set-executionpolicy Unrestricted
 
 Set-Item WSMan:\localhost\Client\TrustedHosts -Value '*' -Force
 $osInfo = Get-CimInstance -ClassName Win32_OperatingSystem
 
-if($osInfo -ne 1){
+if($osInfo.ProductType -ne 1){
     $computerNames = get-adcomputer -filter * | foreach {$_.DNSHostName}
 }
 else{
