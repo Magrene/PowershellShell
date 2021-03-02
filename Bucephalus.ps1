@@ -4,7 +4,9 @@
 else{
     $idk = 'Didnt think this far'
 }
+
 $osInfo = Get-CimInstance -ClassName Win32_OperatingSystem
+
 if($osInfo -ne 1){
     $computerNames = get-adcomputer -filter * | foreach {$_.DNSHostName}
 }
