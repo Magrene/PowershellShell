@@ -21,7 +21,7 @@ else{
     $rootDN=$rootFirst + "." + $rootSecond
     
     $DCIP=Resolve-DnsName $rootDN | where-object{$_.Type -eq 'A'} | select IPAddress | foreach {$_.IPAddress}
-    $ADDSName=(Resolve-DnsName $DCIP | foreach {$_.NamedHost})
+    $ADDSName=(Resolve-DnsName $DCIP | foreach {$_.NameHost})
     $computerNames=invoke-command -ComputerName $ADDSName -ScriptBlock {get-adcomputer -filter * | foreach {$_.DNSHostName}}
 }
 
