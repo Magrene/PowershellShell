@@ -9,7 +9,13 @@ if((hostname) -ne 'Windows10'){
     $computerNames = get-adcomputer -filter * | foreach {$_.DNSHostName}
 }
 else{
-    $computerNames="Windows10.reallife.lockdown`nAD.reallife.lockdown`nFTP.reallife.lockdown"
+    $rootDN=[system.net.dns]::GetHostByName((hostname)).Hostname
+    $rootFirst=$root.split('.')[-2]
+    $rootSecond=$root.split('.')[-1]
+    $rootDN=$rootFirst + "." + $rootSecond
+    
+    $DCIP=Resolve-DnsName $rootDN | where-object{$_.Type -eq 'A'} | select IPAddress | foreach {$_.IPAddress}
+    $computerNames=invoke-command -ComputerName $DCIP -ScriptBlock {get-adcomputer -filter * | foreach {$_.DNSHostName}}
 }
 
 $domainSystemInfo = get-adcomputer -filter * -Properties ipv4address | select ipv4address , dnshostname
