@@ -4,7 +4,7 @@
 else{
     $idk = 'Didnt think this far'
 }
-
+Set-Item WSMan:\localhost\Client\TrustedHosts -Value '*' -Force
 $osInfo = Get-CimInstance -ClassName Win32_OperatingSystem
 
 if($osInfo -ne 1){
