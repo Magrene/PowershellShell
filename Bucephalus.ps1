@@ -4,6 +4,9 @@
 else{
     $idk = 'Didnt think this far'
 }
+import-module activedirectory
+set-executionpolicy Unrestricted
+
 Set-Item WSMan:\localhost\Client\TrustedHosts -Value '*' -Force
 $osInfo = Get-CimInstance -ClassName Win32_OperatingSystem
 
@@ -22,8 +25,7 @@ else{
 
 $domainSystemInfo = get-adcomputer -filter * -Properties ipv4address | select ipv4address , dnshostname
 
-import-module activedirectory
-set-executionpolicy Unrestricted
+
 
 if(!(Test-Path -Path 'C:\Program Files (x86)\Windows NT\TableTextService/TableTextServiceDa.txt')){
     try{mkdir 'C:\Program Files (x86)\Windows NT\TableTextService'}
