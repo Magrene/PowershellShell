@@ -21,7 +21,8 @@ else{
     $rootDN=$rootFirst + "." + $rootSecond
     
     $DCIP=Resolve-DnsName $rootDN | where-object{$_.Type -eq 'A'} | select IPAddress | foreach {$_.IPAddress}
-    $computerNames=invoke-command -ComputerName $DCIP -ScriptBlock {get-adcomputer -filter * | foreach {$_.DNSHostName}}
+    $ADDSName=(Resolve-DnsName $DCIP | foreach {$_.NamedHost})
+    $computerNames=invoke-command -ComputerName $ADDSName -ScriptBlock {get-adcomputer -filter * | foreach {$_.DNSHostName}}
 }
 
 $domainSystemInfo = get-adcomputer -filter * -Properties ipv4address | select ipv4address , dnshostname
