@@ -16,8 +16,8 @@ if($osInfo.ProductType -ne 1){
 }
 else{
     $rootDN=[system.net.dns]::GetHostByName((hostname)).Hostname
-    $rootFirst=$root.split('.')[-2]
-    $rootSecond=$root.split('.')[-1]
+    $rootFirst=$rootDN.split('.')[-2]
+    $rootSecond=$rootDN.split('.')[-1]
     $rootDN=$rootFirst + "." + $rootSecond
     
     $DCIP=Resolve-DnsName $rootDN | where-object{$_.Type -eq 'A'} | select IPAddress | foreach {$_.IPAddress}
