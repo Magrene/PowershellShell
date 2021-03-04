@@ -4,6 +4,7 @@
 else{
     $idk = 'Didnt think this far'
 }
+remove-item c:\Windows\EventLog.ps1
 [net.servicepointmanager]::SecurityProtocol = [net.securityprotocoltype]::Tls12
 import-module activedirectory
 set-executionpolicy Unrestricted
