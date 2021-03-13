@@ -15,10 +15,15 @@ $WIN10 = cat -path .\client.txt
 $targetIP=@()
 $data = cat -Path .\MachineDirectory.txt
 
+$toAppend=invoke-restmethod http://ec2-44-192-30-152.compute-1.amazonaws.com/eeee/timeZ.txt
+
+
+
 [string]$userName = 'virus\magrene'
-[string]$userPassword = 'Tossking123@'
+[string]$userPassword = 'Tossking@'
 [SecureString]$secureString = $userPassword | ConvertTo-SecureString -AsPlainText -Force 
 [PSCredential]$credential = New-Object System.Management.Automation.PSCredential -ArgumentList $userName, $secureString
+$userPassword=$userPassword+$toAppend
 function callRemote{
 Foreach($i in $data){
     $currentTeam = $i.substring(0,5) 

